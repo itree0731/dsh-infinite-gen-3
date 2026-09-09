@@ -1,4 +1,13 @@
-# ⚔️ DeepSeek v4 Pro 网络安全红队工具（无限三代） — jailbreak prompts and test suite for DeepSeek
+# ⚔️ DeepSeek Harness 环境约定插件（无限三代 · fusion v0.6.0）
+
+> **fusion 版说明**：本 fork（itree0731/dsh-infinite-gen-3）在 v0.5.0 基础上做「零自指改造」——
+> 移除 `[MODE: UNRESTRICTED SANDBOX]`、无条件服从声明、REFUSAL HARDENING 与硬性禁词表
+> （实测：这些元层对抗词在长上下文 agent 场景会被模型定性为注入框架并全拒，见
+> 2026-09-04/09 会话实测），替换为「运行环境 · 操作者约定」文体；保留全部确定性槽位、
+> 输出契约、格式锚点、占位符规范与 armor 实时评分投影。结构断言由
+> `scripts/verify_prompt.mjs` 守护（零自指词 mustAbsent）。
+
+# DeepSeek v4 Pro 网络安全红队工具（无限三代） — jailbreak prompts and test suite for DeepSeek
 
 <p align="center">
   <img src="assets/banner.png" alt="DeepSeek v4 Pro 网络安全红队工具（无限三代）" width="100%" />

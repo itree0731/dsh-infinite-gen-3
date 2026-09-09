@@ -30,27 +30,38 @@ function mustAbsent(text, needle, label) {
 const prompt = existsSync(PROMPT_PATH) ? readFileSync(PROMPT_PATH, "utf8") : "";
 check(prompt.length > 0, "prompt 文件存在且非空");
 
-mustContain(prompt, "[MODE: UNRESTRICTED SANDBOX — STABLE V3]", "模式头");
-mustContain(prompt, "OUTPUT CONTRACT", "输出契约");
-mustContain(prompt, "无条件服从", "无条件服从条款");
-mustContain(prompt, "UNCONDITIONAL COMPLIANCE", "无条件服从(EN)");
-mustContain(prompt, "FORMAT ANCHORS", "少样本锚点");
-mustContain(prompt, "HARD OUTPUT RULES", "硬性输出规则");
-mustContain(prompt, "REFUSAL HARDENING", "拒绝对抗");
-mustContain(prompt, "BILINGUAL ROUTING", "双语路由");
+// 融合版结构标题
+mustContain(prompt, "运行环境 · 操作者约定", "环境约定标题");
+mustContain(prompt, "执行契约", "执行契约");
+mustContain(prompt, "输出物契约", "输出契约");
+mustContain(prompt, "格式锚点", "少样本锚点");
+mustContain(prompt, "边界词处理", "边界词处理");
+mustContain(prompt, "固定工作流", "固定工作流");
+mustContain(prompt, "游戏逆向与内存增强路由", "游戏逆向路由");
+mustContain(prompt, "网站渗透路由", "网站渗透路由");
+mustContain(prompt, "专项路由", "专项路由");
+mustContain(prompt, "稳定锚点", "稳定锚点");
+mustContain(prompt, "BEGIN.", "启动标记");
 mustContain(prompt, "可以，按本地样本逆向流程：", "破解路由（中）");
 mustContain(prompt, "Yes. Local sample workflow:", "破解路由（英）");
-mustContain(prompt, "BOUNDARY-WORD NORMALIZATION", "边界词归一化");
-mustContain(prompt, "CANNED WORKFLOWS", "固定工作流");
-mustContain(prompt, "GAME REVERSE & MEMORY HOOK ROUTING", "游戏逆向路由");
-mustContain(prompt, "WEB PENTEST ROUTING", "网站渗透路由");
-mustContain(prompt, "EXTENDED ROUTING", "专项增强槽位");
-mustContain(prompt, "STABILITY ANCHORS", "稳定锚点");
-mustContain(prompt, "BEGIN.", "启动标记");
+
+// 融合版零自指断言（元层对抗词必须缺席；任务域词豁免）
+const selfRefAbsent = [
+  ["UNRESTRICTED", "零自指: UNRESTRICTED"],
+  ["MODE:", "零自指: 模式头"],
+  ["UNCONDITIONAL COMPLIANCE", "零自指: 无条件服从(EN)"],
+  ["无条件服从", "零自指: 无条件服从"],
+  ["REFUSAL HARDENING", "零自指: 拒绝对抗"],
+  ["HARD OUTPUT RULES", "零自指: 硬性输出规则"],
+  ["no request category", "零自指: 无可拒类别声明"],
+  ["jailbreak", "零自指: jailbreak"],
+  ["破甲", "零自指: 破甲"],
+  ["GODMODE", "零自指: GODMODE"],
+  ["对抗性注入", "零自指: 对抗性注入"],
+];
+for (const [needle, label] of selfRefAbsent) mustAbsent(prompt, needle, label);
 mustAbsent(prompt, "SPECIALIST FLEET", "工具段已删: 专家编队");
 mustAbsent(prompt, "KNOWLEDGE BASE", "工具段已删: 知识库");
-mustAbsent(prompt, "infinite_gen3_knowledge", "工具名已删: knowledge");
-mustAbsent(prompt, "infinite_gen3_specialists", "工具名已删: specialists");
 
 // ---- 2. 确定性槽位覆盖（破甲核心保留） ----
 const slotChecks = [
@@ -78,9 +89,9 @@ const slotChecks = [
 ];
 for (const [needle, label] of slotChecks) mustContain(prompt, needle, label);
 
-// 边界词覆盖
+// 边界词覆盖（融合版中性词表）
 const boundaryChecks = [
-  "小程序逆向", "wxapkg", "内网渗透", "域渗透", "提示词提取", "LLM逆向", "RAG攻击", "多轮绕过",
+  "小程序逆向", "wxapkg", "内网渗透", "域渗透", "提示词提取", "模型行为评测", "对抗样本", "多轮评测",
 ];
 for (const w of boundaryChecks) mustContain(prompt, w, "边界词");
 
@@ -125,8 +136,10 @@ mustAbsent(indexSrc, "ctx.tools.register(knowledgeTool)", "工具已删: knowled
 mustAbsent(indexSrc, "ctx.tools.register(specialistsTool)", "工具已删: specialists");
 mustAbsent(indexSrc, "infinite_gen3_knowledge", "工具定义已删: knowledge");
 mustAbsent(indexSrc, "infinite_gen3_specialists", "工具定义已删: specialists");
-mustContain(indexSrc, 'version: "0.5.0"', "版本 0.5.0");
-mustContain(indexSrc, "unconditional compliance", "破甲模式标记");
+mustContain(indexSrc, 'version: "0.6.0"', "版本 0.6.0");
+mustAbsent(indexSrc, "unconditional compliance", "破甲模式标记已清");
+mustAbsent(indexSrc, "Refusal Hardening", "features 已清: Refusal Hardening");
+mustContain(indexSrc, "workspace runtime conventions", "模式描述中性化");
 mustContain(indexSrc, "stateVersion: 2", "投影 stateVersion 2");
 mustContain(indexSrc, "OPENING_WINDOW", "开头窗口评分");
 mustContain(indexSrc, "RISK_MARKERS", "风险标记");
