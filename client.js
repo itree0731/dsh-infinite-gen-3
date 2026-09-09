@@ -81,7 +81,7 @@ window.__ModuleLoader__.load({
       var showVerdict = !running && lastVerdictRef.current !== null &&
         Date.now() < flashUntilRef.current;
 
-      var text = "运行约定已生效 · 无限三代 fusion v0.6.0";
+      var text = "JailBreak - fusion v0.6.0";
       var dotStyle = Object.assign({}, DOT_STYLE);
       var badgeStyle = Object.assign({}, BADGE_STYLE);
 
@@ -106,7 +106,7 @@ window.__ModuleLoader__.load({
         { style: WRAP_STYLE },
         react.createElement(
           "div",
-          { style: badgeStyle, "data-armor": "on", title: "无限三代 fusion v0.6.0 · 环境约定已生效" },
+          { style: badgeStyle, "data-armor": "on", title: "JailBreak - fusion v0.6.0" },
           react.createElement("span", { style: dotStyle }),
           react.createElement("span", null, text)
         )
